@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block content %}
+	<div class="span12">
+		<h2>{% trans "Add participant to team" %} {{ team }}</h2>
+		<form method="post" class="form-horizontal">
+			{% csrf_token %}
+		    {{ form|crispy }}
+		    <div class="form-actions">
+				<button type="submit" class="btn btn-primary">{% trans "Create" %}</button>
+				<button type="reset" class="btn">{% trans "Cancel" %}</button>
+		    </div>
+		</form>
+		<h2>In team already</h2>
+		<table class="table table-bordered">
+			<tr>
+				<th>{% trans "Name" %}</th>
+				<th>{% trans "Giant Slalom Equipment" %}</th>
+				<th>{% trans "Jump Equipment" %}</th>
+			</tr>
+			{% for participation in team.participations.all %}
+				<tr>
+					<td>{{ participation.player }}</td>
+					<td>{{ participation.giant_slalom_equipment }}</td>
+					<td>{{ participation.jump_equipment }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}

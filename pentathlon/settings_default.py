@@ -137,6 +137,9 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'raven.contrib.django',
     'admin_sso',
+    'event',
+    'equipment',
+    'crispy_forms',
     # 'djcelery',
 )
 

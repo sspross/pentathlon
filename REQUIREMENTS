@@ -1,4 +1,4 @@
-Django==1.4.2
+pip install --upgrade django-crispy-formsDjango==1.4.2
 django-mptt==0.5.4
 South==0.7.6
 PIL==1.1.7
@@ -10,3 +10,4 @@ django-debug-toolbar==0.9.4
 pytz==2012h
 raven==2.0.10
 django-admin-sso==0.1.1
+django-crispy-forms==1.2.3

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block content %}
+	<div class="span12">
+		<h2>{% trans "Register team" %}</h2>
+		<form method="post" class="form-horizontal">
+			{% csrf_token %}
+		    {{ form|crispy }}
+		    <div class="form-actions">
+				<button type="submit" class="btn btn-primary">{% trans "Create" %}</button>
+				<button type="reset" class="btn">{% trans "Cancel" %}</button>
+		    </div>
+		</form>
+		<h2>{% trans "Registered teams" %}</h2>
+		{% for event in events %}
+			<h3>{{ event }}</h3>
+			<table class="table table-bordered">
+				<tr>
+					<th>{% trans "Name" %}</th>
+					<th>{% trans "Event" %}</th>
+				</tr>
+				{% for team in event.teams.all %}
+					<tr>
+						<td><a href="team/{{ team.pk }}/">{{ team }}</a></td>
+						<td>{{ team.event }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endfor %}
+	</div>
+{% endblock %}
