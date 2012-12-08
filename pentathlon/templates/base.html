@@ -1,0 +1,70 @@
+{% load feincms_tags feincms_page_tags analytics_tags compress %}
+<!DOCTYPE html>
+<html lang="{{feincms_page.language}}">
+    <head>
+        <!--
+
+                   _ _ _       _ 
+                  | | (_)     | |   
+              __ _| | |_ _ __ | | __  
+             / _` | | | | '_ \| |/ /  
+            | (_| | | | | | | |   < _
+             \__,_|_|_|_|_| |_|_|\_(_)
+        
+            ist die Kreativagentur für Marken und Web aus Zürich.
+
+            allink.ch
+
+        -->  
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>{{feincms_page.title}}</title>
+        <meta property="og:title" content="{{feincms_page.page_title}}"/> 
+        <meta property="og:description" content="{{feincms_page.meta_description}}"/>
+        <meta name="keywords" content="{{feincms_page.meta_keywords}}">
+        <meta name="description" content="{{feincms_page.meta_description}}">
+        {% compress css %}
+			<link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}stylesheets/all.less">
+        {% endcompress %}
+        {% if debug %}
+            <script type="text/javascript" src="{{ STATIC_URL }}javascript/less-1.2.1.min.js"></script>
+        {% endif %}
+    </head>
+    <body>
+        <h1>{{feincms_page.title}}</h1>
+        <!--Languages-->
+        <div id="languages">
+            <ul>
+                {% feincms_languagelinks for feincms_page as languagelinks existing %}
+                {% for key, name, link in languagelinks %}
+                <li><a href="{{link}}"{% if key == feincms_page.language %} class="active"{% endif %}>{{key}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+         <!--Navigation-->
+        <div id="navigation">
+        <ul>
+                {% feincms_navigation of feincms_page as toplevel %}
+                {% for p in toplevel %}
+                    <li>
+                        <a href="{{ p.get_absolute_url }}"{% if p|is_equal_or_parent_of:feincms_page or p.get_absolute_url == request.path %} class="active"{% endif %}>
+                            {{ p.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!---->
+        <div id="main">
+            {% feincms_render_region feincms_page "main" request %}
+        </div>
+        {% compress js %}
+            <script type="text/javascript">
+                function debug(){ {% if debug %}
+                    if(typeof(console)=="object") console.log.apply(console, arguments);
+                {% endif %} };
+            </script>
+            <script type="text/javascript" src="{{ STATIC_URL }}javascript/main.js"></script>
+        {% endcompress %}
+        {% ganalytics %}
+    </body>
+</html>
